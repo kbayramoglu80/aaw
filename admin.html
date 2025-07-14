@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli - Bataryam Hazır</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="admin-password-modal" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(15,61,46,0.97);display:flex;align-items:center;justify-content:center;">
+    <form id="admin-password-form" style="background:#111c22;padding:36px 32px 28px 32px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,0.25);display:flex;flex-direction:column;align-items:center;min-width:320px;">
+      <h2 style="color:#4ade80;margin-bottom:18px;">Admin Girişi</h2>
+      <input type="password" id="admin-password-input" placeholder="Şifre" style="padding:12px 16px;border-radius:8px;border:none;font-size:1.1rem;width:100%;margin-bottom:16px;outline:none;" required minlength="10">
+      <button type="submit" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:10px 0;width:100%;font-weight:bold;font-size:1rem;cursor:pointer;">Giriş Yap</button>
+      <div id="admin-password-error" style="color:#ef4444;margin-top:12px;display:none;font-size:1rem;"></div>
+      <div style="margin-top:18px;color:#b6e0c6;font-size:0.98rem;text-align:center;">Güçlü bir şifre gereklidir.<br>En az 10 karakter, büyük/küçük harf, rakam ve sembol içermelidir.</div>
+    </form>
+  </div>
+  <div class="admin-container">
+    <header class="admin-header">
+      <h1>Bataryam Hazır - Admin Paneli</h1>
+      <a href="index.html" class="home-btn">Ana Sayfaya Dön</a>
+      <nav class="admin-nav">
+        <button class="nav-btn active" onclick="showSection('haberler')">Haberler</button>
+        <button class="nav-btn" onclick="showSection('bilgiler')">Bilgiler</button>
+        <button class="nav-btn" onclick="showSection('modeller')">Modeller</button>
+      </nav>
+    </header>
+
+    <main class="admin-main">
+      <section id="haberler" class="admin-section active">
+        <div class="section-header">
+          <h2>Haber Yönetimi</h2>
+        </div>
+        <div id="haberler-list" class="content-grid"></div>
+      </section>
+
+      <!-- Bilgiler Bölümü -->
+      <section id="bilgiler" class="admin-section">
+        <div class="section-header">
+          <h2>Bilgi Yönetimi</h2>
+          <button class="add-btn" onclick="openAddModal('bilgi')">+ Yeni Bilgi Ekle</button>
+        </div>
+        <div class="content-grid" id="bilgiler-grid">
+          <!-- Bilgiler buraya dinamik olarak yüklenecek -->
+        </div>
+      </section>
+
+      <!-- Modeller Bölümü -->
+      <section id="modeller" class="admin-section">
+        <div class="section-header">
+          <h2>Model Yönetimi</h2>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button class="add-btn" onclick="openAddModal('model')">+ Yeni Model Ekle</button>
+            <button class="add-btn" id="backup-models-btn" style="background:#60a5fa;color:#fff;">Modelleri Yedekle</button>
+            <label for="restore-models-input" class="add-btn" style="background:#fbbf24;color:#222;cursor:pointer;">Modelleri Geri Yükle</label>
+            <input type="file" id="restore-models-input" accept="application/json" style="display:none;">
+          </div>
+        </div>
+        <div class="content-grid" id="modeller-grid">
+          <!-- Modeller buraya dinamik olarak yüklenecek -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal - Ekle/Düzenle -->
+  <div id="content-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modal-title">Haber Ekle/Düzenle</h3>
+      <form id="content-form" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Başlık:</label>
+          <input type="text" id="content-title" required>
+        </div>
+        <div class="form-group">
+          <label>Kısa Açıklama:</label>
+          <textarea id="content-summary" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Detaylı İçerik:</label>
+          <textarea id="content-detail" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Kategori:</label>
+          <select id="content-category">
+            <option value="haber">Haber</option>
+            <option value="teknoloji">Teknoloji</option>
+            <option value="ekonomi">Ekonomi</option>
+            <option value="çevre">Çevre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tarih:</label>
+          <input type="date" id="content-date">
+        </div>
+        <div class="form-group">
+          <label>Görsel Yükle:</label>
+          <input type="file" id="content-image-file" accept="image/*">
+          <img id="content-image-preview" style="display:none;max-width:100%;margin-top:10px;border-radius:8px;" />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="save-btn">Kaydet</button>
+          <button type="button" class="cancel-btn" onclick="closeModal()">İptal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    function isStrongPassword(pw) {
+      return pw.length >= 10 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw) && /[^A-Za-z0-9]/.test(pw);
+    }
+    document.getElementById('admin-password-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('admin-password-input').value;
+      const errorDiv = document.getElementById('admin-password-error');
+      if (!isStrongPassword(input)) {
+        errorDiv.textContent = 'Şifre yeterince güçlü değil!';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      if (input === ADMIN_PASSWORD) {
+        document.getElementById('admin-password-modal').style.display = 'none';
+        document.body.style.overflow = '';
+      } else {
+        errorDiv.textContent = 'Şifre yanlış!';
+        errorDiv.style.display = 'block';
+      }
+    });
+    // Sayfa yüklenince modalı göster ve scroll'u engelle
+    window.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('admin-password-modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('admin-password-input').focus();
+    });
+    // Modelleri Yedekle
+    document.getElementById('backup-models-btn').onclick = function() {
+      const modeller = localStorage.getItem('modeller') || '[]';
+      const blob = new Blob([modeller], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'modeller_yedek.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+    // Modelleri Geri Yükle
+    document.getElementById('restore-models-input').onchange = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (!Array.isArray(data)) throw new Error('Geçersiz dosya!');
+          localStorage.setItem('modeller', JSON.stringify(data));
+          alert('Modeller başarıyla geri yüklendi!');
+          location.reload();
+        } catch (err) {
+          alert('Yedek dosyası hatalı veya bozuk!');
+        }
+      };
+      reader.readAsText(file);
+    };
+  </script>
+</body>
+</html> 

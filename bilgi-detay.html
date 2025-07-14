@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilgi Detayı - Bataryam Hazır</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-icon">🔋</span>
+      <span class="logo-text">Bataryam <b>Hazır</b></span>
+    </div>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="index.html#haberler">Haberler</a>
+      <a href="index.html#bilgiler">Bilgiler</a>
+      <a href="index.html#modeller">Modeller</a>
+      <a href="index.html#iletisim">İletişim</a>
+    </nav>
+  </header>
+
+  <main class="detail-main">
+    <div class="detail-container">
+      <div id="bilgi-content">
+        <article class="haber-article">
+          <h1 id="bilgi-title"></h1>
+          <div class="haber-meta">
+            <span id="bilgi-category"></span>
+          </div>
+          <div class="haber-summary" id="bilgi-summary"></div>
+          <div class="haber-detail" id="bilgi-detail"></div>
+        </article>
+      </div>
+      <div class="back-btn">
+        <a href="index.html#bilgiler">← Bilgilere Dön</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadBilgiDetail();
+    });
+
+    function loadBilgiDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bilgiId = urlParams.get('id');
+      if (!bilgiId) {
+        showError('Bilgi ID bulunamadı!');
+        return;
+      }
+      fetch(`http://localhost:3001/api/infos/${bilgiId}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Bilgi bulunamadı!');
+          return res.json();
+        })
+        .then(bilgi => {
+          if (!bilgi || !bilgi.title) throw new Error('Bilgi verisi eksik!');
+          document.getElementById('bilgi-title').textContent = bilgi.title || '-';
+          document.getElementById('bilgi-summary').textContent = bilgi.summary || '-';
+          document.getElementById('bilgi-detail').textContent = bilgi.detail || '-';
+          document.getElementById('bilgi-category').textContent = bilgi.category || '-';
+          document.title = `${bilgi.title} - Bataryam Hazır`;
+        })
+        .catch(err => {
+          console.error('Detay fetch hatası:', err);
+          showError(err.message);
+        });
+    }
+    function showError(message) {
+      const container = document.getElementById('bilgi-content');
+      container.innerHTML = `
+        <div class="error-message">
+          <h2>Hata</h2>
+          <p>${message}</p>
+          <a href="index.html" class="back-btn">Ana Sayfaya Dön</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html> 

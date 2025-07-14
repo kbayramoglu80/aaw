@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "title": "Elektrikli Araçlarda Yeni Dönemaa",
+    "summary": "Elektrikli araçlar hızla yaygınlaşıyor...",
+    "content": "Elektrikli araçlar hızla yaygınlaşıyor... Detaylı içerik burada.",
+    "image": "/backend/uploads/1752498634788-389159154.png",
+    "category": "haber",
+    "date": "2024-07-13"
+  },
+  {
+    "id": "2",
+    "title": "Şarj İstasyonları Artıyoraaaa",
+    "summary": "Türkiye genelinde şarj istasyonları sayısı artıyor...",
+    "content": "Türkissye genelinde şarj istasyonları sayısı artıyor... Detaylı içerik burssada.aass",
+    "image": "/backend/uploads/2021-volkswagen-id.4-exterior-in-motion.jpg",
+    "category": "haber",
+    "date": "2024-07-13"
+  },
+  {
+    "title": "2025 Mercedes EQS Tanıtıldı",
+    "summary": "Mercedes-Benz, yeni EQS modeliyle elektrikli lüksü yeniden tanımlıyor.",
+    "content": "2025 Mercedes EQS, gelişmiş batarya teknolojisi ve 800 km menziliyle dikkat çekiyor...",
+    "image": "/backend/uploads/2025-mercedes-benz-eqs-exterior-113-6616f12b6d591.avif",
+    "category": "haber",
+    "date": "2024-07-13",
+    "id": "1752494165356"
+  },
+  {
+    "title": "Hyundai Ioniq 5: 2024 Güncellemesi",
+    "summary": "Hyundai Ioniq 5, yeni donanım ve yazılım güncellemeleriyle geliyor.",
+    "content": "2024 Ioniq 5, daha hızlı şarj ve gelişmiş sürüş asistanları sunuyor...",
+    "image": "/backend/uploads/ioniq5-2024-og.jpg",
+    "category": "haber",
+    "date": "2024-07-13",
+    "id": "1752494897652"
+  },
+  {
+    "title": "Audi e-tron Sportback Türkiye’de",
+    "summary": "Audi’nin elektrikli SUV modeli e-tron Sportback, Türkiye yollarında.",
+    "content": "Audi e-tron Sportback, sportif tasarımı ve 400 km menziliyle öne çıkıyor...adad",
+    "image": "/backend/uploads/2020-Audi-E-Tron-Sportback-11.jpg",
+    "category": "haber",
+    "date": "2024-07-13",
+    "id": "1752494162553"
+  },
+  {
+    "title": "Tesla Model S 2025: Performans Zirvesi",
+    "summary": "Tesla, yeni Model S ile performans ve menzilde sınırları zorluyor.",
+    "content": "2025 Model S, 0-100 km/s hızlanmasını 2 saniyede tamamlıyor...",
+    "image": "/backend/uploads/2025-tesla-model-s-1-672d42e172407.avif",
+    "category": "haber",
+    "date": "2024-07-13",
+    "id": "1752494040126"
+  }
+]
